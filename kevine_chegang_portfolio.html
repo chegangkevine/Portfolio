@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chegang Kevine · QA Engineer & AI Test Lead</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0e0f11;
+      --bg2: #15171a;
+      --bg3: #1c1f23;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.12);
+      --text: #f0ede8;
+      --muted: #8a8782;
+      --accent: #b8f0a0;
+      --accent2: #7dd3fc;
+      --accent3: #fbbf24;
+      --green: #22c55e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.2rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(14,15,17,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .nav-name { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--muted); letter-spacing: 0.05em; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; display: inline-block; margin-right: 6px; animation: pulse 2s ease infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 8rem 2.5rem 4rem;
+      position: relative;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+    }
+    .hero-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .hero-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 400;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+    .hero-desc {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 38ch;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .hero-right { display: flex; flex-direction: column; justify-content: flex-end; gap: 2rem; }
+    .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; border: 0.5px solid var(--border); }
+    .stat-cell {
+      padding: 1.5rem;
+      background: var(--bg2);
+    }
+    .stat-cell:hover { background: var(--bg3); }
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-lbl { font-size: 12px; color: var(--muted); }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      padding: 5px 10px;
+      border: 0.5px solid var(--border2);
+      color: var(--muted);
+      letter-spacing: 0.03em;
+      transition: all 0.2s;
+    }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .cta-row { display: flex; gap: 1rem; margin-top: 2rem; }
+    .btn {
+      padding: 0.75rem 1.75rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-primary { background: var(--accent); color: #0e0f11; }
+    .btn-primary:hover { background: #d4f7c2; }
+    .btn-outline { border: 0.5px solid var(--border2); color: var(--muted); }
+    .btn-outline:hover { border-color: var(--text); color: var(--text); }
+
+    /* Section */
+    section { padding: 5rem 2.5rem; border-bottom: 0.5px solid var(--border); }
+    .section-header {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem;
+    }
+    .section-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .section-line { flex: 1; height: 0.5px; background: var(--border); }
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    /* Services */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--border); border: 0.5px solid var(--border); }
+    .service-card {
+      background: var(--bg);
+      padding: 2rem;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .service-card:hover { background: var(--bg2); }
+    .service-card:hover::before { opacity: 1; }
+    .service-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .service-title { font-size: 16px; font-weight: 500; margin-bottom: 0.75rem; }
+    .service-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+    /* Experience */
+    .exp-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 3rem;
+      padding: 3rem 0;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-meta { }
+    .exp-company { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 0.3rem; }
+    .exp-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .exp-badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      padding: 3px 8px;
+      border: 0.5px solid var(--accent);
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .exp-badge.ai { border-color: var(--accent2); color: var(--accent2); }
+    .exp-content { }
+    .exp-title { font-family: 'DM Serif Display', serif; font-size: 1.6rem; font-weight: 400; margin-bottom: 1rem; letter-spacing: -0.01em; }
+    .exp-summary { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+    .exp-subsection { margin-bottom: 1.25rem; }
+    .exp-sublabel {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--accent3);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .bullet-list { list-style: none; }
+    .bullet-list li {
+      font-size: 13px;
+      color: var(--muted);
+      padding: 3px 0 3px 16px;
+      position: relative;
+      line-height: 1.7;
+    }
+    .bullet-list li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--border2);
+      font-size: 11px;
+    }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1.25rem; }
+    .tag-sm {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      padding: 3px 8px;
+      background: var(--bg3);
+      color: var(--muted);
+      border: 0.5px solid var(--border);
+    }
+
+    /* Skills */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--border); border: 0.5px solid var(--border); }
+    .skill-group { background: var(--bg); padding: 1.75rem; }
+    .skill-group-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .skill-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      font-size: 12px;
+      padding: 4px 10px;
+      background: var(--bg3);
+      color: var(--muted);
+      border: 0.5px solid var(--border);
+      transition: all 0.2s;
+    }
+    .chip:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    /* Contact */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-row { display: flex; align-items: center; gap: 1rem; }
+    .contact-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      min-width: 70px;
+    }
+    .contact-val { font-size: 14px; color: var(--text); }
+    .contact-val a { color: var(--accent2); text-decoration: none; }
+    .contact-val a:hover { text-decoration: underline; }
+    .avail-box {
+      border: 0.5px solid var(--accent);
+      padding: 2rem;
+      background: rgba(184,240,160,0.04);
+    }
+    .avail-title { font-family: 'DM Serif Display', serif; font-size: 1.4rem; margin-bottom: 0.75rem; }
+    .avail-desc { font-size: 13px; color: var(--muted); line-height: 1.8; }
+
+    /* Footer */
+    footer {
+      padding: 2rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 6rem 1.5rem 3rem; }
+      .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      section { padding: 3rem 1.5rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 1rem; }
+      .contact-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-name">chegang.kevine</span>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <span style="font-size:12px; color: var(--muted);"><span class="nav-dot"></span>Available for freelance</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-label">QA Engineer · AI Test Lead</div>
+      <h1>Chegang<br><em>Kevine</em></h1>
+      <p class="hero-desc">Software developer turned quality assurance lead. I test, automate, and break things so your users don't have to.</p>
+      <div class="hero-tags">
+        <span class="tag">Katalon Studio</span>
+        <span class="tag">Cypress</span>
+        <span class="tag">UiPath</span>
+        <span class="tag">Python</span>
+        <span class="tag">AI Testing</span>
+        <span class="tag">Agile</span>
+        <span class="tag">Jira</span>
+        <span class="tag">React.js</span>
+      </div>
+      <div class="cta-row">
+        <a href="mailto:chegangkev@gmail.com" class="btn btn-primary">Get in touch</a>
+        <a href="#experience" class="btn btn-outline">View experience</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stats">
+        <div class="stat-cell">
+          <div class="stat-num">2+</div>
+          <div class="stat-lbl">Years in QA</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">3</div>
+          <div class="stat-lbl">Automation tools</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">2</div>
+          <div class="stat-lbl">Lead roles</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">FR/EN</div>
+          <div class="stat-lbl">Bilingual</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <div class="section-line"></div>
+    <h2>Services</h2>
+  </div>
+  <div class="services-grid fade-in">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-title">Test Automation</div>
+      <div class="service-desc">Set up full automated test suites with Katalon, Cypress, or UiPath for your web or mobile application.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-title">Manual QA & Recette</div>
+      <div class="service-desc">Write test cases, conduct manual testing sessions, and produce clear recette and bug reports.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-title">AI Model Testing</div>
+      <div class="service-desc">Design complex conversation scenarios, stress-test generative AI models, and deliver model improvement reports.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-title">QA Consulting</div>
+      <div class="service-desc">Translate business requirements into technical specs, manage backlogs, and align QA protocols with your delivery objectives.</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <div class="section-line"></div>
+    <h2>Experience</h2>
+  </div>
+
+  <div class="exp-item fade-in">
+    <div class="exp-meta">
+      <div class="exp-company">2C Conseil</div>
+      <div class="exp-date">Jul 2024 – Present</div>
+      <span class="exp-badge">LEAD QA</span>
+    </div>
+    <div class="exp-content">
+      <div class="exp-title">Lead QA Engineer</div>
+      <p class="exp-summary">French company with a Cameroon branch. Leading quality assurance on the LADOM project — from manual testing to full automation pipelines, CRM tooling, and business-to-technical translation.</p>
+      <ul class="bullet-list">
+        <li>Test automation on the LADOM project using Katalon Studio</li>
+        <li>Manual test case writing, test plan & recette documentation</li>
+        <li>Automated regression suites with Cypress</li>
+        <li>RPA test automation with UiPath</li>
+        <li>Backlog management & task prioritization in Jira</li>
+        <li>Version control and collaboration via Git</li>
+        <li>Built custom CRM & reporting tools in Python to automate internal data delivery</li>
+        <li>Translated business requirements into detailed technical specifications</li>
+      </ul>
+      <div class="tag-list">
+        <span class="tag-sm">Katalon</span><span class="tag-sm">Cypress</span><span class="tag-sm">UiPath</span>
+        <span class="tag-sm">Jira</span><span class="tag-sm">Git</span><span class="tag-sm">Python</span>
+        <span class="tag-sm">Manual Testing</span><span class="tag-sm">CRM</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-item fade-in">
+    <div class="exp-meta">
+      <div class="exp-company">SUNNET Groupe</div>
+      <div class="exp-date">Dec 2023 – Mar 2024</div>
+      <span class="exp-badge ai">AI / LEAD DEV</span>
+    </div>
+    <div class="exp-content">
+      <div class="exp-title">Lead Developer & AI Test Engineer</div>
+      <p class="exp-summary">Led development and AI quality testing for RVI Quebec 511 — a voice-based application helping Canadians access real-time road condition data across Quebec using generative AI.</p>
+      <div class="exp-subsection">
+        <div class="exp-sublabel">AI Testing & Conversation Design</div>
+        <ul class="bullet-list">
+          <li>Designed complex conversation scenarios and stress-tests to identify voice model failures</li>
+          <li>Filled response gaps and improved relevance of generative AI outputs</li>
+          <li>Produced performance analysis reports translating raw observations into model improvement instructions</li>
+        </ul>
+      </div>
+      <div class="exp-subsection">
+        <div class="exp-sublabel">Model Training & Development</div>
+        <ul class="bullet-list">
+          <li>Trained models on targeted capabilities: coding, data manipulation, vision, and voice</li>
+          <li>Toolstack: Python, Faster Whisper, Hugging Face, Runpod, serverless technologies, Docker</li>
+        </ul>
+      </div>
+      <div class="exp-subsection">
+        <div class="exp-sublabel">Agile & Delivery</div>
+        <ul class="bullet-list">
+          <li>Worked within an international Agile team to align test protocols with production objectives</li>
+          <li>Ensured reliability of AI deliverables across sprint cycles</li>
+        </ul>
+      </div>
+      <div class="tag-list">
+        <span class="tag-sm">Python</span><span class="tag-sm">Faster Whisper</span><span class="tag-sm">Hugging Face</span>
+        <span class="tag-sm">Docker</span><span class="tag-sm">Runpod</span><span class="tag-sm">Serverless</span>
+        <span class="tag-sm">AI Testing</span><span class="tag-sm">Agile</span><span class="tag-sm">Voice AI</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-item fade-in">
+    <div class="exp-meta">
+      <div class="exp-company">BeOne Conseil</div>
+      <div class="exp-date">Jun – Sep 2023</div>
+      <span class="exp-badge">INTERN</span>
+    </div>
+    <div class="exp-content">
+      <div class="exp-title">Chatbot Developer</div>
+      <p class="exp-summary">Built an educational chatbot powered by the ChatGPT API.</p>
+      <ul class="bullet-list">
+        <li>JavaScript frontend, Node.js backend</li>
+        <li>Integrated OpenAI API for conversational AI capabilities</li>
+      </ul>
+      <div class="tag-list">
+        <span class="tag-sm">JavaScript</span><span class="tag-sm">Node.js</span><span class="tag-sm">ChatGPT API</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-item fade-in">
+    <div class="exp-meta">
+      <div class="exp-company">WAWIL Startup</div>
+      <div class="exp-date">Jun – Sep 2022</div>
+      <span class="exp-badge">INTERN</span>
+    </div>
+    <div class="exp-content">
+      <div class="exp-title">Mobile Developer</div>
+      <p class="exp-summary">Built a mobile application for online consultation.</p>
+      <ul class="bullet-list">
+        <li>Android Studio frontend, Java backend</li>
+        <li>Gained skills in HTML, CSS, and PHP</li>
+      </ul>
+      <div class="tag-list">
+        <span class="tag-sm">Java</span><span class="tag-sm">Android Studio</span><span class="tag-sm">HTML/CSS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <div class="section-line"></div>
+    <h2>Skills</h2>
+  </div>
+  <div class="skills-grid fade-in">
+    <div class="skill-group">
+      <div class="skill-group-label">QA & Testing</div>
+      <div class="skill-chips">
+        <span class="chip">Katalon Studio</span>
+        <span class="chip">Cypress</span>
+        <span class="chip">UiPath</span>
+        <span class="chip">Manual testing</span>
+        <span class="chip">Test plans</span>
+        <span class="chip">Recette</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">AI & Machine Learning</div>
+      <div class="skill-chips">
+        <span class="chip">AI testing</span>
+        <span class="chip">Faster Whisper</span>
+        <span class="chip">Hugging Face</span>
+        <span class="chip">Prompt design</span>
+        <span class="chip">Stress-testing</span>
+        <span class="chip">Voice AI</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Project & Delivery</div>
+      <div class="skill-chips">
+        <span class="chip">Jira</span>
+        <span class="chip">Git</span>
+        <span class="chip">Agile</span>
+        <span class="chip">Backlog mgmt</span>
+        <span class="chip">Tech specs</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Development</div>
+      <div class="skill-chips">
+        <span class="chip">Python</span>
+        <span class="chip">Django</span>
+        <span class="chip">React.js</span>
+        <span class="chip">Node.js</span>
+        <span class="chip">Docker</span>
+        <span class="chip">Java</span>
+        <span class="chip">Firebase</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <div class="section-line"></div>
+    <h2>Contact</h2>
+  </div>
+  <div class="contact-grid fade-in">
+    <div class="contact-info">
+      <div class="contact-row">
+        <span class="contact-label">Email</span>
+        <span class="contact-val"><a href="mailto:chegangkev@gmail.com">chegangkev@gmail.com</a></span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">Phone</span>
+        <span class="contact-val">+237 655 08 15 25</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">Location</span>
+        <span class="contact-val">Yaoundé, Cameroon · Remote</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">Languages</span>
+        <span class="contact-val">French · English</span>
+      </div>
+    </div>
+    <div class="avail-box">
+      <div class="avail-title">Open to freelance missions</div>
+      <div class="avail-desc">Available for remote QA and automation projects. Whether you need a full test strategy, automated regression suite, or AI model quality review — I'm ready to help deliver reliable software.</div>
+      <div style="margin-top: 1.25rem;">
+        <a href="mailto:chegangkev@gmail.com" class="btn btn-primary">Send a message</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Chegang Kevine</span>
+  <span>QA Engineer · AI Test Lead · Yaoundé, Cameroon</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
